@@ -2,12 +2,14 @@
 {
     private static Character player;
 
+    // 게임 메인
     static void Main(string[] args)
     {
         GameDataSetting();
         DisplayGameIntro();
     }
 
+    // 게임 데이터 세팅
     static void GameDataSetting()
     {
         // 캐릭터 정보 세팅
@@ -36,20 +38,21 @@
                 break;
 
             case 2:
-                // 작업해보기
+                DisplayInventory();
                 break;
         }
     }
 
+    // 자신의 스텟 정보 표시
     static void DisplayMyInfo()
     {
         Console.Clear();
 
-        Console.WriteLine("상태보기");
-        Console.WriteLine("캐릭터의 정보르 표시합니다.");
+        Console.WriteLine("[ 상태보기 ]");
+        Console.WriteLine("캐릭터의 정보를 표시합니다.");
         Console.WriteLine();
         Console.WriteLine($"Lv.{player.Level}");
-        Console.WriteLine($"{player.Name}({player.Job})");
+        Console.WriteLine($"{player.Name} ( {player.Job} )");
         Console.WriteLine($"공격력 :{player.Atk}");
         Console.WriteLine($"방어력 : {player.Def}");
         Console.WriteLine($"체력 : {player.Hp}");
@@ -66,7 +69,34 @@
         }
     }
 
+    // 인벤토리 정보 표시
     static void DisplayInventory()
+    {
+        Console.Clear();
+
+        Console.WriteLine("[ 인벤토리 ]");
+        Console.WriteLine();
+
+        // 아이템 목록 표시
+        player.DisplayItems();
+
+        Console.WriteLine();
+        Console.WriteLine("1. 장착 관리");
+        Console.WriteLine("0. 나가기");
+
+        int input = CheckValidInput(0, 0);
+        switch (input)
+        {
+            case 1:
+                DisplayEquipmentManage();
+                break;
+            case 0:
+                DisplayGameIntro();
+                break;
+        }
+    }
+
+    static void DisplayEquipmentManage()
     {
 
     }
@@ -86,27 +116,5 @@
 
             Console.WriteLine("잘못된 입력입니다.");
         }
-    }
-}
-
-public class Character
-{
-    public string Name { get; }
-    public string Job { get; }
-    public int Level { get; }
-    public int Atk { get; }
-    public int Def { get; }
-    public int Hp { get; }
-    public int Gold { get; }
-
-    public Character(string name, string job, int level, int atk, int def, int hp, int gold)
-    {
-        Name = name;
-        Job = job;
-        Level = level;
-        Atk = atk;
-        Def = def;
-        Hp = hp;
-        Gold = gold;
     }
 }
