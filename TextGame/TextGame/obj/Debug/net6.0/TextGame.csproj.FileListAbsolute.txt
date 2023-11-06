@@ -13,3 +13,5 @@ C:\Users\UnityProject\Documents\GitHub\TextGame_PSW\TextGame\TextGame\obj\Debug\
 C:\Users\UnityProject\Documents\GitHub\TextGame_PSW\TextGame\TextGame\obj\Debug\net6.0\TextGame.pdb
 C:\Users\UnityProject\Documents\GitHub\TextGame_PSW\TextGame\TextGame\obj\Debug\net6.0\TextGame.genruntimeconfig.cache
 C:\Users\UnityProject\Documents\GitHub\TextGame_PSW\TextGame\TextGame\obj\Debug\net6.0\ref\TextGame.dll
+C:\Users\UnityProject\Documents\GitHub\TextGame_PSW\TextGame\TextGame\bin\Debug\net6.0\ConsoleTables.dll
+C:\Users\UnityProject\Documents\GitHub\TextGame_PSW\TextGame\TextGame\obj\Debug\net6.0\TextGame.csproj.CopyComplete

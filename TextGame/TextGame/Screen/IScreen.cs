@@ -1,6 +1,16 @@
-﻿namespace TextGame.Screen
+﻿namespace Shelter.Screen;
+
+public interface IScreen
 {
-    internal interface IScreen
+    public sealed void StartDisplay()
     {
+        do
+        {
+            DrawScreen();
+        }
+        while (ManageInput());
     }
+
+    private protected bool ManageInput();
+    private protected void DrawScreen();
 }
