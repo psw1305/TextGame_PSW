@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "wirslb5MlN319lE5EZVlNddH0HVKIkQta9qLpP7n6+2M27+f8ceS0ksejIXJgxBmmADJX21Fj/ALWJCNJ7Tg7A==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\UnityProject\\Documents\\GitHub\\TextGame_PSW\\TextGameShelter\\TextGame\\Shelter.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\UnityProject\\.nuget\\packages\\consoletables\\2.6.1\\consoletables.2.6.1.nupkg.sha512"
+  ],
+  "logs": []
+}
