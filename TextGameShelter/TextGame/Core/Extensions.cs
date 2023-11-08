@@ -4,6 +4,7 @@ namespace Shelter.Core;
 
 public static class Extensions
 {
+    // 아이템 이름이 비어있는 경우 => Null
     public static bool IsEmptyItem(this IItem item) => string.IsNullOrEmpty(item.Name);
 
     // 아이템 타입 => 문자열 변환
@@ -38,26 +39,6 @@ public static class Extensions
         else
         {
             return string.Empty;
-        }
-    }
-
-    /// <summary>
-    /// 선택지 입력 체크
-    /// </summary>
-    public static int CheckValidInput(int min, int max)
-    {
-        while (true)
-        {
-            string input = Console.ReadLine();
-
-            bool parseSuccess = int.TryParse(input, out var ret);
-            if (parseSuccess)
-            {
-                if (ret >= min && ret <= max)
-                    return ret;
-            }
-
-            Console.WriteLine("잘못된 입력입니다.");
         }
     }
 }

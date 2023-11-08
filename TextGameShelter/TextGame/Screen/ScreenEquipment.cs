@@ -3,31 +3,10 @@ using Shelter.Model;
 
 namespace Shelter.Screen;
 
-public class ScreenEquipment
+public class ScreenEquipment : IScreen
 {
     public static int currentItemIdx = 0;
     public static int currentItemsLength = GameManager.player.Inventory.Count - 1;
-
-    public static void DisplayEquipment()
-    {
-        do
-        {
-            Console.Clear();
-
-            Console.Write("[인벤토리] - ");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("장착 관리");
-            Console.WriteLine();
-            Console.ResetColor();
-
-            // 아이템 목록 표시
-            GameManager.player.DisplayEquipmentList(currentItemIdx);
-
-            Console.WriteLine();
-            Console.WriteLine("[방향키 ↑ ↓: 위 아래로 이동, Enter: 아이템 장착, Exit: 인벤토리로 돌아가기]");
-        }
-        while (ManageInput());
-    }
 
     /// <summary>
     /// 인벤토리에서 아이템 장착
@@ -52,7 +31,28 @@ public class ScreenEquipment
         }
     }
 
-    static bool ManageInput()
+    public void DrawScreen()
+    {
+        do
+        {
+            Console.Clear();
+
+            Console.Write("[인벤토리] - ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("장착 관리");
+            Console.WriteLine();
+            Console.ResetColor();
+
+            // 아이템 목록 표시
+            GameManager.player.DisplayEquipmentList(currentItemIdx);
+
+            Console.WriteLine();
+            Console.WriteLine("[방향키 ↑ ↓: 위 아래로 이동] [Enter: 아이템 장착] [Esc: 인벤토리로 돌아가기]");
+        }
+        while (ManageInput());
+    }
+
+    public bool ManageInput()
     {
         var key = Console.ReadKey();
 
@@ -88,7 +88,7 @@ public class ScreenEquipment
                 break;
 
             case Command.Exit:
-                ScreenInventory.DisplayInventory();
+                GameManager.screen.DisplayScreen(ScreenType.Inventory);
                 break;
 
             default:

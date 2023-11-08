@@ -1,34 +1,33 @@
-﻿namespace Shelter.Screen;
+﻿using Shelter.Core;
 
-public class ScreenInventory : IScreen
+namespace Shelter.Screen;
+
+public class ScreenMain : IScreen
 {
     public static int currentIdx = 0;
     public static string[] selectNames =
     {
-        "장비관리",
-        "나가기",
+        "상태보기",
+        "인벤토리",
     };
 
     private static ScreenType SelectScreen()
     {
         return currentIdx switch
         {
-            0 => ScreenType.Equipment,
+            0 => ScreenType.MyInfo,
+            1 => ScreenType.Inventory,
             _ => ScreenType.Main,
         };
     }
 
-    // 인벤토리 정보 표시
     public void DrawScreen()
     {
         do
         {
             Console.Clear();
-            Console.WriteLine("[인벤토리]");
+            Console.WriteLine(Globals.ASCIIART_TITLE);
             Console.WriteLine();
-
-            // 아이템 목록 표시
-            GameManager.player.DisplayInventoryList();
 
             for (int i = 0; i < selectNames.Length; i++)
             {

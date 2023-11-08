@@ -1,10 +1,21 @@
-﻿namespace Shelter;
+﻿using Shelter.Screen;
+
+namespace Shelter;
 
 public class ScreenManager
 {
-    public void Display()
+    public void DisplayScreen(ScreenType screenType)
     {
+        IScreen screen = screenType switch
+        {
+            ScreenType.Main => new ScreenMain(),
+            ScreenType.MyInfo => new ScreenMyInfo(),
+            ScreenType.Inventory => new ScreenInventory(),
+            ScreenType.Equipment => new ScreenEquipment(),
+            _ => new ScreenMain()
+        };
 
+        screen.DrawScreen();
     }
 }
 
@@ -13,8 +24,8 @@ public class ScreenManager
 /// </summary>
 public enum ScreenType
 {
-    Lobby,
     Main,
+    MyInfo,
     Inventory,
     Equipment,
 }

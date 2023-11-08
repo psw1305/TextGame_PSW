@@ -1,15 +1,15 @@
-﻿using Shelter.Core;
-using Shelter.Model;
-using Shelter.Screen;
+﻿using Shelter.Model;
 
 namespace Shelter;
 
 public class GameManager
 {
+    public static ScreenManager screen = new();
+
     // 게임 시작
     public void Start()
     {
-        DisplayGameIntro();
+        screen.DisplayScreen(ScreenType.Main);
     }
 
     #region Player Setting
@@ -29,29 +29,4 @@ public class GameManager
     public static Character player = new Character("John", "전직 군인", 1, 10, 5, 100, 1500, Items.ToList(), Equipment);
 
     #endregion
-
-    public static void DisplayGameIntro()
-    {
-        Console.Clear();
-
-        Console.WriteLine(Globals.ASCIIART_TITLE);
-
-        Console.WriteLine();
-        Console.WriteLine("1. 상태보기");
-        Console.WriteLine("2. 인벤토리");
-        Console.WriteLine("3. 게임시작");
-        Console.WriteLine();
-        Console.WriteLine("원하시는 행동을 입력해주세요.");
-
-        int input = Extensions.CheckValidInput(1, 2);
-        switch (input)
-        {
-            case 1:
-                ScreenMyInfo.DisplayMyInfo();
-                break;
-            case 2:
-                ScreenInventory.DisplayInventory();
-                break;
-        }
-    }
 }

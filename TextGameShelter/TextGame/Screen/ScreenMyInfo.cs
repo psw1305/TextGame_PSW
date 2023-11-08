@@ -1,14 +1,14 @@
-﻿using Shelter.Core;
+﻿namespace Shelter.Screen;
 
-namespace Shelter.Screen
+public class ScreenMyInfo : IScreen
 {
-    public class ScreenMyInfo
+    public void DrawScreen()
     {
-        public static void DisplayMyInfo()
+        do
         {
             Console.Clear();
 
-            Console.WriteLine("[상태보기] - 캐릭터의 정보를 표시합니다.");
+            Console.WriteLine("[상태보기]");
             Console.WriteLine();
             Console.WriteLine($"Lv.{GameManager.player.Level}");
             Console.WriteLine($"{GameManager.player.Name} ( {GameManager.player.Job} )");
@@ -17,15 +17,26 @@ namespace Shelter.Screen
             Console.WriteLine($"체력  : {GameManager.player.Hp}");
             Console.WriteLine($"현금  : {GameManager.player.Cash}");
             Console.WriteLine();
-            Console.WriteLine("0. 나가기");
-
-            int input = Extensions.CheckValidInput(0, 0);
-            switch (input)
-            {
-                case 0:
-                    GameManager.DisplayGameIntro();
-                    break;
-            }
+            Console.WriteLine("[Esc: 나가기]");
         }
+        while (ManageInput());
+    }
+
+    public bool ManageInput()
+    {
+        var key = Console.ReadKey();
+
+        var commands = key.Key switch
+        {
+            ConsoleKey.Escape => Command.Exit,
+            _ => Command.Nothing
+        };
+
+        if (commands == Command.Exit)
+        {
+            GameManager.screen.DisplayScreen(ScreenType.Main);
+        }
+
+        return commands != Command.Exit;
     }
 }
