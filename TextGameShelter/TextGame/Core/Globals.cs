@@ -6,7 +6,7 @@
 public static class Globals
 {
     // 로비 타이틀 아스키 아트
-    public const string LobbyTitleAsciiArt =
+    public const string ASCIIART_TITLE =
         @"
    _____   _    _   ______   _        _______   ______   _____  
   / ____| | |  | | |  ____| | |      |__   __| |  ____| |  __ \ 

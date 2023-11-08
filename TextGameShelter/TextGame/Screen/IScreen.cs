@@ -2,5 +2,7 @@
 
 public interface IScreen
 {
-    public void DrawScreen();
+    //public void DrawScreen();
+
+    protected bool ManageInput();
 }

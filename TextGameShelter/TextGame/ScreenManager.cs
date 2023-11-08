@@ -19,3 +19,12 @@ public enum ScreenType
     Equipment,
 }
 
+public enum Command
+{
+    Exit,
+    Interact,
+    Nothing,
+    MoveTop,
+    MoveBottom,
+}
+

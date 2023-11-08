@@ -2,7 +2,7 @@
 
 public interface IItem
 {
-    public string Name { get; }
-    public string Desc { get; }
-    public int Price { get; }
+    public string Name { get; }     // 아이템 이름
+    public string Desc { get; }     // 아이템 설명
+    public int Price { get; }       // 아이템 가격
 }

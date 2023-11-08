@@ -1,29 +1,29 @@
 ﻿using Shelter.Core;
-using Shelter.Model;
 
 namespace Shelter.Screen;
 
-public class Screen_Inventory
+public class ScreenInventory
 {
     // 인벤토리 정보 표시
-    public static void DisplayInventory(Character player)
+    public static void DisplayInventory()
     {
         Console.Clear();
 
-        Console.WriteLine("[ 인벤토리 ]");
+        Console.WriteLine("[인벤토리]");
         Console.WriteLine();
 
         // 아이템 목록 표시
-        player.DisplayItems();
+        GameManager.player.DisplayInventoryList();
 
         Console.WriteLine();
         Console.WriteLine("1. 장착 관리");
         Console.WriteLine("0. 나가기");
 
-        int input = Extensions.CheckValidInput(0, 0);
+        int input = Extensions.CheckValidInput(0, 1);
         switch (input)
         {
             case 1:
+                ScreenEquipment.DisplayEquipment();
                 break;
             case 0:
                 GameManager.DisplayGameIntro();
