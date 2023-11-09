@@ -8,21 +8,6 @@ namespace Shelter.Screen;
 public class ScreenInventory : IScreen
 {
     private static List<IItem> screenInventory = Game.player.Inventory.ToList();
-    private static int currentIdx = 0;
-    private static string[] selectNames =
-    {
-        "장비관리",
-        "나가기",
-    };
-
-    private static ScreenType SelectScreen()
-    {
-        return currentIdx switch
-        {
-            0 => ScreenType.Equipment,
-            _ => ScreenType.Main,
-        };
-    }
 
     /// <summary>
     /// 인벤토리 아이템 리스트 전시
@@ -53,20 +38,9 @@ public class ScreenInventory : IScreen
             // 모든 아이템 목록 전시
             DrawInventoryList();
 
-            for (int i = 0; i < selectNames.Length; i++)
-            {
-                if (i == currentIdx)
-                {
-                    WriteLine($"▷ {selectNames[i]}");
-                }
-                else
-                {
-                    WriteLine($"   {selectNames[i]}");
-                }
-            }
-
+            WriteLine($"▷ 장 비 관 리");
             WriteLine();
-            WriteLine("[방향키 ↑ ↓: 위 아래로 이동] [Enter: 선택] [Esc: 메인으로 돌아가기]");
+            WriteLine("[Enter: 장비관리] [Esc: 메인화면]");
             WriteLine("[정렬 : 1. 이름  2. 가격  3. 타입]");
         }
         while (ManageInput());
@@ -96,20 +70,8 @@ public class ScreenInventory : IScreen
     {
         switch (cmd)
         {
-            case Command.MoveTop:
-                if (currentIdx > 0)
-                {
-                    currentIdx--;
-                }
-                break;
-            case Command.MoveBottom:
-                if (currentIdx < selectNames.Length - 1)
-                {
-                    currentIdx++;
-                }
-                break;
             case Command.Interact:
-                Game.screen.DisplayScreen(SelectScreen());
+                Game.screen.DisplayScreen(ScreenType.Equipment);
                 break;
             case Command.Exit:
                 Game.screen.DisplayScreen(ScreenType.Main);

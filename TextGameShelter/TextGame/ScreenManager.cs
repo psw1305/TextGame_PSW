@@ -5,6 +5,11 @@ namespace Shelter;
 
 public class ScreenManager
 {
+    public ScreenManager() 
+    {
+        Console.SetWindowSize(120, 30);
+    }
+
     /// <summary>
     /// 화면 타입 전시
     /// </summary>

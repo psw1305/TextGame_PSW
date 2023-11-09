@@ -10,7 +10,6 @@ public class ScreenMyInfo : IScreen
             Console.WriteLine();
             Console.WriteLine("[ 상 태 보 기 ]");
             Console.WriteLine();
-            Console.WriteLine($"Lv.{Game.player.Level}");
             Console.WriteLine($"{Game.player.Name} ( {Game.player.Job} )");
             Console.WriteLine($"공격력 :{Game.player.Atk}");
             Console.WriteLine($"방어력 : {Game.player.Def}");

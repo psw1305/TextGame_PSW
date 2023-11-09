@@ -15,7 +15,7 @@ public class Game
         screen.DisplayScreen(ScreenType.Main);
     }
 
-    #region Player Setting
+    #region Player
     
     public static IItem[] Items =
     {
@@ -34,19 +34,24 @@ public class Game
 
     #endregion
 
-    #region Stage Setting
+    #region Stage 
 
     private static int currentStage = -1;
 
     public static IStage[] Stages =
     {
-        new StageBattle("스테이지 1", "첫번째 전투입니다."),
+        new StageBattle("스테이지 1", "첫번째 전투입니다.", Encounter1),
         new StageEvent("스테이지 2", "첫번째 이벤트입니다."),
-        new StageBattle("스테이지 3", "두번째 전투입니다."),
+        new StageBattle("스테이지 3", "두번째 전투입니다.", Encounter2),
         new StageShop("상점", "첫번째 전투입니다."),
         new StageEvent("스테이지 4", "두번째 이벤트입니다."),
-        new StageBattle("스테이지 5", "마지막 전투입니다.")
+        new StageBattle("스테이지 5", "마지막 전투입니다.", Encounter3)
     };
+
+    public static void InitStage()
+    {
+        currentStage = -1;
+    }
 
     public static void NextStage()
     {
@@ -57,10 +62,30 @@ public class Game
         }
         else
         {
-            currentStage = -1;
+            InitStage();
             screen.DisplayScreen(ScreenType.End);
         }
     }
+
+    #endregion
+
+    #region Stage 
+
+    public static Enemy[] Encounter1 =
+    {
+        new Enemy("시궁 쥐", 4, 0, 25),
+        new Enemy("거대한 벌레", 3, 2, 12),
+    };
+
+    public static Enemy[] Encounter2 =
+    {
+        new Enemy("레이더", 8, 3, 40),
+    };
+
+    public static Enemy[] Encounter3 =
+    {
+        new Enemy("군용 드론", 20, 10, 80)
+    };
 
     #endregion
 }
