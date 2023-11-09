@@ -1,15 +1,11 @@
-﻿using Shelter.Core;
+﻿namespace Shelter.Screen;
 
-namespace Shelter.Screen;
-
-public class ScreenMain : IScreen
+public class ScreenEnd : IScreen
 {
     public static int currentIdx = 0;
     public static string[] selectNames =
     {
-        "상 태 보 기",
-        "인 벤 토 리",
-        "쉘 터 찾 기"
+        "메 인 화 면",
     };
 
     private static ScreenType SelectScreen()
@@ -18,7 +14,6 @@ public class ScreenMain : IScreen
         {
             0 => ScreenType.MyInfo,
             1 => ScreenType.Inventory,
-            2 => ScreenType.Stage,
             _ => ScreenType.Main,
         };
     }
@@ -28,7 +23,7 @@ public class ScreenMain : IScreen
         do
         {
             Console.Clear();
-            Console.WriteLine(Globals.ASCIIART_TITLE);
+            Console.WriteLine("게임 끝");
             Console.WriteLine();
 
             for (int i = 0; i < selectNames.Length; i++)
@@ -80,7 +75,7 @@ public class ScreenMain : IScreen
                 break;
 
             case Command.Interact:
-                Game.screen.DisplayScreen(SelectScreen());
+                Game.screen.DisplayScreen(ScreenType.Main);
                 break;
 
             default:

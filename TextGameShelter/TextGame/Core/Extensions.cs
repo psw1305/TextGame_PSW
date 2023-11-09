@@ -1,4 +1,4 @@
-﻿using Shelter.Model;
+﻿using Shelter.Model.Item;
 
 namespace Shelter.Core;
 
@@ -8,11 +8,22 @@ public static class Extensions
     public static bool IsEmptyItem(this IItem item) => string.IsNullOrEmpty(item.Name);
 
     // 아이템 타입 => 문자열 변환
+    public static string TypeToString(this ItemType type)
+    {
+        return type switch
+        {
+            ItemType.Equipment => "장비",
+            ItemType.Useable => "소모품",
+            _ => string.Empty
+        };
+    }
+
+    // 장비 타입 => 문자열 변환
     public static string TypeToString(this EquipType type)
     {
         return type switch
         {
-            EquipType.Weapon => "주 무기",
+            EquipType.Weapon => "무기",
             EquipType.Armor => "방어구",
             _ => string.Empty
         };
@@ -21,7 +32,7 @@ public static class Extensions
     // 아이템 능력치 => 문자열 변환
     public static string StatToString(this ItemEquip item)
     {
-        return item.Type switch
+        return item.EquipType switch
         {
             EquipType.Weapon => "공격력 +" + item.Stat,
             EquipType.Armor => "방어력 +" + item.Stat,

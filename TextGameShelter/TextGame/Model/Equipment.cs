@@ -1,4 +1,5 @@
 ﻿using Shelter.Core;
+using Shelter.Model.Item;
 
 namespace Shelter.Model;
 
