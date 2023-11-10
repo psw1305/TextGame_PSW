@@ -21,16 +21,12 @@ public class Game
     {
         new ItemEquip(EquipType.Armor, "후줄근한 조끼", "없는 것 보다는 낫다", 500, 5),
         new ItemEquip(EquipType.Weapon, "야구 방망이", "흔한 스포츠 야구 방망이", 200, 2),
-        new ItemEquip(EquipType.Armor, "경찰 진압복", "신체를 보호하는 복장", 1500, 15),
-        new ItemEquip(EquipType.Weapon, "마체테", "여러 용도에 쓰이는 정글도", 400, 4),
-        new ItemUseable("과일 통조림", "허기를 채울 때 좋습니다.", 150),
-        new ItemUseable("권총", "딱 총알 하나만 장전되어있습니다.", 3000),
-        new ItemUseable("붕대", "다친 상처를 치료할 때 쓰입니다.", 500)
+        new ItemUseable("초코바", "요기용으로 괜찮습니다.", 50),
     };
 
     public static Equipment Equipment = new();
 
-    public static Character player = new("John", "전직 군인", 10, 5, 100, 1500, Items.ToList(), Equipment);
+    public static Character player = new("Bill", "퇴역 군인", 10, 5, 100, 5000, Items.ToList(), Equipment);
 
     #endregion
 
@@ -53,12 +49,17 @@ public class Game
         currentStage = -1;
     }
 
+    public static void CurrentStage()
+    {
+        screen.DisplayStageScreen(Stages[currentStage].StageType);
+    }
+
     public static void NextStage()
     {
         if (currentStage < Stages.Length - 1)
         {
             currentStage++;
-            screen.DisplayStageScreen(Stages[currentStage].StageType);
+            CurrentStage();
         }
         else
         {
@@ -69,7 +70,7 @@ public class Game
 
     #endregion
 
-    #region Stage 
+    #region Stage Data
 
     public static Enemy[] Encounter1 =
     {
@@ -85,6 +86,17 @@ public class Game
     public static Enemy[] Encounter3 =
     {
         new Enemy("군용 드론", 20, 10, 80)
+    };
+
+    public static IItem[] ShopProducts =
+    {
+        new ItemEquip(EquipType.Armor, "소방서 방화복", "뜨거운 온도를 견딜수 있습니다", 1500, 15),
+        new ItemEquip(EquipType.Armor, "경찰 진압복", "신체를 보호하는 복장", 1500, 15),
+        new ItemEquip(EquipType.Weapon, "마체테", "여러 용도에 쓰이는 정글도", 500, 4),
+        new ItemEquip(EquipType.Weapon, "소방 도끼", "다재다능한 도구", 800, 8),
+        new ItemUseable("권총", "총알 하나만 장전되어있습니다.", 3000),
+        new ItemUseable("붕대", "다친 상처를 치료할 때 쓰입니다.", 200),
+        new ItemUseable("과일 통조림", "허기를 채울 때 좋습니다.", 150),
     };
 
     #endregion

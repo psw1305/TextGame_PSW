@@ -5,14 +5,14 @@ namespace Shelter.Screen;
 public class ScreenMain : IScreen
 {
     public static int currentIdx = 0;
-    public static string[] selectNames =
+    public static string[] selections =
     {
         "상 태 보 기",
         "인 벤 토 리",
         "쉘 터 찾 기"
     };
 
-    private static ScreenType SelectScreen()
+    static ScreenType ScreenSelections()
     {
         return currentIdx switch
         {
@@ -31,15 +31,15 @@ public class ScreenMain : IScreen
             Console.WriteLine(Globals.ASCIIART_TITLE);
             Console.WriteLine();
 
-            for (int i = 0; i < selectNames.Length; i++)
+            for (int i = 0; i < selections.Length; i++)
             {
                 if (i == currentIdx)
                 {
-                    Console.WriteLine($"▷ {selectNames[i]}");
+                    Console.WriteLine($"▷ {selections[i]}");
                 }
                 else
                 {
-                    Console.WriteLine($"   {selectNames[i]}");
+                    Console.WriteLine($"   {selections[i]}");
                 }
             }
 
@@ -73,16 +73,13 @@ public class ScreenMain : IScreen
                 if (currentIdx > 0)
                     currentIdx--;
                 break;
-
             case Command.MoveBottom:
-                if (currentIdx < selectNames.Length - 1)
+                if (currentIdx < selections.Length - 1)
                     currentIdx++;
                 break;
-
             case Command.Interact:
-                Game.screen.DisplayScreen(SelectScreen());
+                Game.screen.DisplayScreen(ScreenSelections());
                 break;
-
             default:
                 break;
         }

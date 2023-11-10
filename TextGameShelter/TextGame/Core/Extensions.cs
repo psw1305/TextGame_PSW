@@ -52,4 +52,9 @@ public static class Extensions
             return string.Empty;
         }
     }
+
+    public static int ToPrice(this IItem item)
+    {
+        return (int)(item.Price * 0.8f);
+    }
 }

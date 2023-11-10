@@ -2,11 +2,32 @@
 
 public class ScreenStageShop : IScreen
 {
+    public static ScreenShopBuy ShopScreen = new();
+    public static ScreenShopSell ShopSellScreen = new();
+
     public static int currentIdx = 0;
-    public static string[] selectNames =
+    public static string[] selections =
     {
-        "계 속 하 기",
+        "구 매",
+        "판 매",
+        "떠 나 기"
     };
+
+    static void Selection()
+    {
+        if (currentIdx == 0) 
+        {
+            ShopScreen.DrawScreen();
+        }
+        else if (currentIdx == 1)
+        {
+            ShopSellScreen.DrawScreen();
+        }
+        else if(currentIdx == 2) 
+        {
+            Game.NextStage();
+        }
+    }
 
     public void DrawScreen()
     {
@@ -16,15 +37,15 @@ public class ScreenStageShop : IScreen
             Console.WriteLine("상 점 스 테 이 지");
             Console.WriteLine();
 
-            for (int i = 0; i < selectNames.Length; i++)
+            for (int i = 0; i < selections.Length; i++)
             {
                 if (i == currentIdx)
                 {
-                    Console.WriteLine($"▷ {selectNames[i]}");
+                    Console.WriteLine($"▷ {selections[i]}");
                 }
                 else
                 {
-                    Console.WriteLine($"   {selectNames[i]}");
+                    Console.WriteLine($"   {selections[i]}");
                 }
             }
 
@@ -59,11 +80,11 @@ public class ScreenStageShop : IScreen
                     currentIdx--;
                 break;
             case Command.MoveBottom:
-                if (currentIdx < selectNames.Length - 1)
+                if (currentIdx < selections.Length - 1)
                     currentIdx++;
                 break;
             case Command.Interact:
-                Game.NextStage();
+                Selection();
                 break;
             default:
                 break;

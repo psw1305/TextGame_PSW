@@ -3,20 +3,10 @@
 public class ScreenEnd : IScreen
 {
     public static int currentIdx = 0;
-    public static string[] selectNames =
+    public static string[] selections =
     {
         "메 인 화 면",
     };
-
-    private static ScreenType SelectScreen()
-    {
-        return currentIdx switch
-        {
-            0 => ScreenType.MyInfo,
-            1 => ScreenType.Inventory,
-            _ => ScreenType.Main,
-        };
-    }
 
     public void DrawScreen()
     {
@@ -26,20 +16,20 @@ public class ScreenEnd : IScreen
             Console.WriteLine("게임 끝");
             Console.WriteLine();
 
-            for (int i = 0; i < selectNames.Length; i++)
+            for (int i = 0; i < selections.Length; i++)
             {
                 if (i == currentIdx)
                 {
-                    Console.WriteLine($"▷ {selectNames[i]}");
+                    Console.WriteLine($"▷ {selections[i]}");
                 }
                 else
                 {
-                    Console.WriteLine($"   {selectNames[i]}");
+                    Console.WriteLine($"   {selections[i]}");
                 }
             }
 
             Console.WriteLine();
-            Console.WriteLine("[방향키 ↑ ↓: 위 아래로 이동] [Enter: 선택]");
+            Console.WriteLine("[Enter: 선택]");
         }
         while (ManageInput());
     }
@@ -70,7 +60,7 @@ public class ScreenEnd : IScreen
                 break;
 
             case Command.MoveBottom:
-                if (currentIdx < selectNames.Length - 1)
+                if (currentIdx < selections.Length - 1)
                     currentIdx++;
                 break;
 
