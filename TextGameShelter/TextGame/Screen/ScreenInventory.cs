@@ -7,7 +7,12 @@ namespace Shelter.Screen;
 
 public class ScreenInventory : IScreen
 {
-    private static List<IItem> screenInventory = Game.player.Inventory.ToList();
+    private static List<IItem> screenInventory;
+
+    public ScreenInventory()
+    {
+        screenInventory = Game.player.Inventory.ToList();
+    }
 
     /// <summary>
     /// 인벤토리 아이템 리스트 전시

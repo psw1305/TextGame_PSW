@@ -2,26 +2,32 @@
 using Shelter.Core;
 using Shelter.Model;
 using Shelter.Model.Item;
+using static System.Console;
 
 namespace Shelter.Screen;
 
 public class ScreenEquipment : IScreen
 {
-    public static int currentItemIdx = 0;
-    public static int currentItemsLength = Game.player.Inventory.Count - 1;
+    static int currentItemIdx;
+    static List<IItem> equipItemList;
+
+    public ScreenEquipment()
+    {
+        currentItemIdx = 0;
+        equipItemList = Game.player.Inventory.Where(item => item.ItemType.TypeToString() == "장비").ToList();
+    }
 
     /// <summary>
     /// 인벤토리에서 아이템 장착
     /// </summary>
     static void EquipFromInventory()
     {
-        var item = Game.player.Inventory.ElementAtOrDefault(currentItemIdx);
+        var item = equipItemList.ElementAtOrDefault(currentItemIdx);
         if (item == null || item.IsEmptyItem()) return;
 
-        var equipItem = (ItemEquip)item;
-        if (equipItem != null)
+        if (item is ItemEquip equipItem)
         {
-            switch (equipItem.EquipType) 
+            switch (equipItem.EquipType)
             {
                 case EquipType.Weapon:
                     Game.player.Equipment.Equip(EquipSlot.Weapon, equipItem);
@@ -38,9 +44,7 @@ public class ScreenEquipment : IScreen
     /// </summary>
     public void DrawEquipmentList()
     {
-        var player = Game.player;
         var table = new ConsoleTable("선택", "착용 상태", "이름", "타입", "능력치", "설명");
-        List<IItem> equipItemList = player.Inventory.Where(item => item.ItemType.TypeToString() == "장비").ToList();
 
         for (int i = 0; i < equipItemList.Count; i++)
         {
@@ -53,33 +57,33 @@ public class ScreenEquipment : IScreen
         }
 
         table.Write();
-        Console.WriteLine();
+        WriteLine();
     }
 
     public void DrawScreen()
     {
         do
         {
-            Console.Clear();
-            Console.WriteLine();
-            Console.Write("[ 인 벤 토 리 ] - ");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("장 착 관 리");
-            Console.WriteLine();
-            Console.ResetColor();
+            Clear();
+            WriteLine();
+            Write("[ 인 벤 토 리 ] - ");
+            ForegroundColor = ConsoleColor.Green;
+            WriteLine("장 착 관 리");
+            WriteLine();
+            ResetColor();
 
             // 장비 아이템 목록 전시
             DrawEquipmentList();
 
-            Console.WriteLine();
-            Console.WriteLine("[방향키 ↑ ↓: 위 아래로 이동] [Enter: 아이템 장착] [Esc: 인벤토리로 돌아가기]");
+            WriteLine();
+            WriteLine("[방향키 ↑ ↓: 위 아래로 이동] [Enter: 아이템 장착] [Esc: 인벤토리로 돌아가기]");
         }
         while (ManageInput());
     }
 
     public bool ManageInput()
     {
-        var key = Console.ReadKey(true);
+        var key = ReadKey(true);
 
         var commands = key.Key switch
         {
@@ -103,7 +107,7 @@ public class ScreenEquipment : IScreen
                     currentItemIdx--;
                 break;
             case Command.MoveBottom:
-                if (currentItemIdx < currentItemsLength)
+                if (currentItemIdx < equipItemList.Count - 1)
                     currentItemIdx++;
                 break;
             case Command.Interact:

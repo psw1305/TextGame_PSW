@@ -31,6 +31,15 @@ public class Equipment
     /// <param name="itemEquip">장착할 아이템</param>
     public void Equip(EquipSlot slot, ItemEquip itemEquip)
     {
+        equipped.TryGetValue(slot, out var item);
+
+        // 같은 장비를 착용중 인가?
+        if (item == itemEquip)
+        {
+            Unequip(slot);
+            return;
+        }
+
         // 해당 장비창이 비어있지 않은가?
         if (!equipped[slot].IsEmptyItem())
         {

@@ -44,6 +44,11 @@ public class Game
         new StageBattle("스테이지 5", "마지막 전투입니다.", Encounter3)
     };
 
+    public static StageBattle CurrentBattle()
+    {
+        return Stages[currentStage] as StageBattle;
+    }
+
     public static void InitStage()
     {
         currentStage = -1;

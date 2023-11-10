@@ -10,7 +10,7 @@ public class ScreenShopSell : IScreen
     public static int currentItemIdx = 0;
     public static List<IItem> Inventory = Game.player.Inventory;
 
-    static void ItemSell()
+    static void Sell()
     {
         var item = Game.player.Inventory[currentItemIdx];
         if (item == null || item.IsEmptyItem()) return;
@@ -93,7 +93,7 @@ public class ScreenShopSell : IScreen
                     currentItemIdx++;
                 break;
             case Command.Interact:
-                ItemSell();
+                Sell();
                 break;
             case Command.Exit:
                 Game.CurrentStage();

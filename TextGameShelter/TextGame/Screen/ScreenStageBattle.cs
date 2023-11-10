@@ -1,47 +1,59 @@
 ﻿namespace Shelter.Screen;
 
+using Shelter.Model;
+using static System.Console;
+
 public class ScreenStageBattle : IScreen
 {
-    public static int currentIdx = 0;
-    public static string[] selectNames =
+    static int selectedEnemyIdx;
+
+    public static Enemy[] Enemies;
+
+    int spacing = 15;
+
+    public ScreenStageBattle() 
     {
-        "계 속 하 기",
-    };
+        selectedEnemyIdx = 0;
+        Enemies = Game.CurrentBattle().Enemies;
+    }
 
     public void DrawScreen()
     {
         do
         {
-            Console.Clear();
-            Console.WriteLine("전 투 스 테 이 지");
-            Console.WriteLine();
+            Clear();
+            WriteLine("전 투 스 테 이 지");
+            WriteLine();
 
-            for (int i = 0; i < selectNames.Length; i++)
+            for (int i = 0; i < 3; i++)
             {
-                if (i == currentIdx)
+                if (i == selectedEnemyIdx)
                 {
-                    Console.WriteLine($"▷ {selectNames[i]}");
+                    Write("▽".PadRight(spacing));
                 }
                 else
                 {
-                    Console.WriteLine($"   {selectNames[i]}");
+                    Write("  ".PadRight(spacing));
                 }
             }
 
-            Console.WriteLine();
-            Console.WriteLine("[방향키 ↑ ↓: 위 아래로 이동] [Enter: 선택]");
+            WriteLine();
+            WriteLine();
+            WriteLine("[방향키 ← →: 좌우로 이동] [A: 공격] [E: 아이템 사용]");
         }
         while (ManageInput());
     }
 
     public bool ManageInput()
     {
-        var key = Console.ReadKey(true);
+        var key = ReadKey(true);
 
         var commands = key.Key switch
         {
-            ConsoleKey.UpArrow => Command.MoveTop,
-            ConsoleKey.DownArrow => Command.MoveBottom,
+            ConsoleKey.LeftArrow => Command.MoveLeft,
+            ConsoleKey.RightArrow => Command.MoveRight,
+            ConsoleKey.A => Command.Attack,
+            ConsoleKey.E => Command.Use,
             ConsoleKey.Enter => Command.Interact,
             _ => Command.Nothing
         };
@@ -54,20 +66,27 @@ public class ScreenStageBattle : IScreen
     {
         switch (cmd)
         {
-            case Command.MoveTop:
-                if (currentIdx > 0)
-                    currentIdx--;
+            case Command.MoveLeft:
+                if (selectedEnemyIdx> 0)
+                {
+                    selectedEnemyIdx--;
+                }
                 break;
-
-            case Command.MoveBottom:
-                if (currentIdx < selectNames.Length - 1)
-                    currentIdx++;
+            case Command.MoveRight:
+                if (selectedEnemyIdx < 2)
+                {
+                    selectedEnemyIdx++;
+                }
                 break;
-
+            case Command.Attack:
+                
+                break;
+            case Command.Use:
+                
+                break;
             case Command.Interact:
                 Game.NextStage();
                 break;
-
             default:
                 break;
         }

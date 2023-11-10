@@ -10,7 +10,7 @@ public class ScreenShopBuy : IScreen
     public static int currentItemIdx = 0;
     public static List<IItem> productLists = Game.ShopProducts.ToList();
 
-    static void ProductBuy()
+    static void Buy()
     {
         var item = productLists[currentItemIdx];
         if (item == null || item.IsEmptyItem()) return;
@@ -61,6 +61,7 @@ public class ScreenShopBuy : IScreen
 
             WriteLine();
             WriteLine("[방향키 ↑ ↓: 위 아래로 이동] [Enter: 상품 구매] [Esc: 상점]");
+            WriteLine($"{Game.player.Inventory.Count}");
         }
         while (ManageInput());
     }
@@ -95,7 +96,7 @@ public class ScreenShopBuy : IScreen
                     currentItemIdx++;
                 break;
             case Command.Interact:
-                ProductBuy();
+                Buy();
                 break;
             case Command.Exit:
                 Game.CurrentStage();

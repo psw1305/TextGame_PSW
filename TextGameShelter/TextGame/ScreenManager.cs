@@ -71,8 +71,12 @@ public enum Command
     Nothing,
     MoveTop,
     MoveBottom,
+    MoveLeft,
+    MoveRight,
     Num1,
     Num2,
     Num3,
+    Attack,
+    Use,
 }
 
