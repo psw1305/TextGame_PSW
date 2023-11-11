@@ -8,15 +8,15 @@ namespace Shelter.Screen;
 public class ScreenShopSell : IScreen
 {
     public static int currentItemIdx = 0;
-    public static List<IItem> Inventory = Game.player.Inventory;
+    public static List<IItem> Inventory = Game.Player.Inventory;
 
     static void Sell()
     {
-        var item = Game.player.Inventory[currentItemIdx];
+        var item = Game.Player.Inventory[currentItemIdx];
         if (item == null || item.IsEmptyItem()) return;
 
-        Game.player.Cash += item.ToPrice();
-        Game.player.Inventory.Remove(item);
+        Game.Player.Cash += item.ToPrice();
+        Game.Player.Inventory.Remove(item);
     }
 
     /// <summary>
@@ -24,7 +24,7 @@ public class ScreenShopSell : IScreen
     /// </summary>
     public void DrawInvenList()
     {
-        var inventory = Game.player.Inventory;
+        var inventory = Game.Player.Inventory;
         var table = new ConsoleTable("선택", "이름", "타입", "설명", "판매가");
 
         for (int i = 0; i < inventory.Count; i++)
@@ -52,7 +52,7 @@ public class ScreenShopSell : IScreen
             ResetColor();
 
             WriteLine();
-            Write($"[ 보 유 현 금 : {Game.player.Cash}]");
+            Write($"[ 보 유 현 금 : {Game.Player.Cash}]");
             WriteLine();
 
             DrawInvenList();
@@ -89,7 +89,7 @@ public class ScreenShopSell : IScreen
                     currentItemIdx--;
                 break;
             case Command.MoveBottom:
-                if (currentItemIdx < Game.player.Inventory.Count - 1)
+                if (currentItemIdx < Game.Player.Inventory.Count - 1)
                     currentItemIdx++;
                 break;
             case Command.Interact:

@@ -15,9 +15,9 @@ public class ScreenShopBuy : IScreen
         var item = productLists[currentItemIdx];
         if (item == null || item.IsEmptyItem()) return;
 
-        if (Game.player.IsTrade(item.Price))
+        if (Game.Player.IsTrade(item.Price))
         {
-            Game.player.Inventory.Add(item);
+            Game.Player.Inventory.Add(item);
             productLists.Remove(item);
         }
     }
@@ -54,14 +54,14 @@ public class ScreenShopBuy : IScreen
             ResetColor();
 
             WriteLine();
-            Write($"[ 보 유 현 금 : {Game.player.Cash}]");
+            Write($"[ 보 유 현 금 : {Game.Player.Cash}]");
             WriteLine();
 
             DrawProductList();
 
             WriteLine();
             WriteLine("[방향키 ↑ ↓: 위 아래로 이동] [Enter: 상품 구매] [Esc: 상점]");
-            WriteLine($"{Game.player.Inventory.Count}");
+            WriteLine($"{Game.Player.Inventory.Count}");
         }
         while (ManageInput());
     }

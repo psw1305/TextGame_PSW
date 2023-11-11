@@ -1,15 +1,12 @@
-﻿namespace Shelter.Screen;
-
+﻿using Shelter.Core;
 using Shelter.Model;
-using static System.Console;
+
+namespace Shelter.Screen;
 
 public class ScreenStageBattle : IScreen
 {
     static int selectedEnemyIdx;
-
     public static Enemy[] Enemies;
-
-    int spacing = 15;
 
     public ScreenStageBattle() 
     {
@@ -21,32 +18,18 @@ public class ScreenStageBattle : IScreen
     {
         do
         {
-            Clear();
-            WriteLine("전 투 스 테 이 지");
-            WriteLine();
-
-            for (int i = 0; i < 3; i++)
-            {
-                if (i == selectedEnemyIdx)
-                {
-                    Write("▽".PadRight(spacing));
-                }
-                else
-                {
-                    Write("  ".PadRight(spacing));
-                }
-            }
-
-            WriteLine();
-            WriteLine();
-            WriteLine("[방향키 ← →: 좌우로 이동] [A: 공격] [E: 아이템 사용]");
+            Console.Clear();
+            Renderer.DrawBorder();
+            Renderer.DrawSideBorder();
+            Renderer.PrintSideCharacterInfo();
+            Renderer.PrintSideInventory();
         }
         while (ManageInput());
     }
 
     public bool ManageInput()
     {
-        var key = ReadKey(true);
+        var key = Console.ReadKey(true);
 
         var commands = key.Key switch
         {

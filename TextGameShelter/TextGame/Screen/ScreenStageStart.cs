@@ -1,35 +1,78 @@
-﻿namespace Shelter.Screen;
+﻿using Shelter.Core;
+
+namespace Shelter.Screen;
 
 public class ScreenStageStart : IScreen
 {
-    public static int currentIdx = 0;
-    public static string[] selectNames =
+    static int progress = 0;
+    static int selectionIdx = 0;
+    static string[] selectionsCharacter =
     {
-        "진 행 하 기",
+        "    빌    ",
+        "  루이스  ",
+        "   조이   ",
+        " 프란시스 ",
     };
+
+    static string[] selectionsStory =
+    {
+        "돈많은 부자",
+        "은둔 외톨이",
+        "생존형 전문가",
+        "가진게 없는자",
+    };
+
+    static void Progress()
+    {
+        if (progress == 0)
+        {
+            Renderer.Print(4, "[캐릭터를 고르십시오..]");
+            Renderer.PrintSelections(8, selectionIdx, selectionsCharacter);
+        }
+        else if (progress == 1)
+        {
+            Renderer.Print(4, "[이야기를 고르십시오..]");
+            Renderer.PrintSelections(8, selectionIdx, selectionsStory);
+            Renderer.PrintSideCharacterInfo();
+        }
+        else if (progress == 2)
+        {
+            Renderer.Print(4, "[쉘터 찾기...]");
+            Renderer.Print(8, "[Enter를 눌러서 게임 스타트]");
+            Renderer.PrintSideCharacterInfo();
+            Renderer.PrintSideInventory();
+        }
+        else if (progress == 3)
+        {
+            Game.NextStage();
+        }
+    }
+
+    static void Select()
+    {
+        progress++;
+
+        if (progress == 1)
+        {
+            Game.Player = Game.Characters[selectionIdx];
+        }
+        else if (progress == 2)
+        {
+            Game.Player.StartItem(Game.Items.ToList());
+        }
+
+        selectionIdx = 0;
+    }
 
     public void DrawScreen()
     {
         do
         {
             Console.Clear();
-            Console.WriteLine("시 작 스 테 이 지");
-            Console.WriteLine();
+            Renderer.DrawBorder();
+            Renderer.DrawSideBorder();
 
-            for (int i = 0; i < selectNames.Length; i++)
-            {
-                if (i == currentIdx)
-                {
-                    Console.WriteLine($"▷ {selectNames[i]}");
-                }
-                else
-                {
-                    Console.WriteLine($"   {selectNames[i]}");
-                }
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("[방향키 ↑ ↓: 위 아래로 이동] [Enter: 선택]");
+            Progress();
         }
         while (ManageInput());
     }
@@ -47,7 +90,8 @@ public class ScreenStageStart : IScreen
         };
 
         OnCommand(commands);
-        return commands != Command.Interact;
+
+        return commands != Command.Exit;
     }
 
     static void OnCommand(Command cmd)
@@ -55,15 +99,15 @@ public class ScreenStageStart : IScreen
         switch (cmd)
         {
             case Command.MoveTop:
-                if (currentIdx > 0)
-                    currentIdx--;
+                if (selectionIdx > 0)
+                    selectionIdx--;
                 break;
             case Command.MoveBottom:
-                if (currentIdx < selectNames.Length - 1)
-                    currentIdx++;
+                if (selectionIdx < selectionsCharacter.Length - 1)
+                    selectionIdx++;
                 break;
             case Command.Interact:
-                Game.NextStage();
+                Select();
                 break;
             default:
                 break;

@@ -4,21 +4,19 @@ namespace Shelter.Screen;
 
 public class ScreenMain : IScreen
 {
-    public static int currentIdx = 0;
+    public static int selectionIdx = 0;
     public static string[] selections =
     {
-        "상 태 보 기",
-        "인 벤 토 리",
-        "쉘 터 찾 기"
+        "게 임 시 작",
+        "이 어 하 기"
     };
 
     static ScreenType ScreenSelections()
     {
-        return currentIdx switch
+        return selectionIdx switch
         {
-            0 => ScreenType.MyInfo,
-            1 => ScreenType.Inventory,
-            2 => ScreenType.Stage,
+            0 => ScreenType.Stage,
+            1 => ScreenType.Stage,
             _ => ScreenType.Main,
         };
     }
@@ -28,23 +26,8 @@ public class ScreenMain : IScreen
         do
         {
             Console.Clear();
-            Console.WriteLine(Globals.ASCIIART_TITLE);
-            Console.WriteLine();
-
-            for (int i = 0; i < selections.Length; i++)
-            {
-                if (i == currentIdx)
-                {
-                    Console.WriteLine($"▷ {selections[i]}");
-                }
-                else
-                {
-                    Console.WriteLine($"   {selections[i]}");
-                }
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("[방향키 ↑ ↓: 위 아래로 이동] [Enter: 선택]");
+            Renderer.PrintMainTitle();
+            Renderer.PrintMainSelections(selectionIdx, selections);
         }
         while (ManageInput());
     }
@@ -70,12 +53,12 @@ public class ScreenMain : IScreen
         switch (cmd)
         {
             case Command.MoveTop:
-                if (currentIdx > 0)
-                    currentIdx--;
+                if (selectionIdx > 0)
+                    selectionIdx--;
                 break;
             case Command.MoveBottom:
-                if (currentIdx < selections.Length - 1)
-                    currentIdx++;
+                if (selectionIdx < selections.Length - 1)
+                    selectionIdx++;
                 break;
             case Command.Interact:
                 Game.screen.DisplayScreen(ScreenSelections());

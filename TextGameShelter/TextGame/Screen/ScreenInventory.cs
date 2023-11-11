@@ -11,7 +11,7 @@ public class ScreenInventory : IScreen
 
     public ScreenInventory()
     {
-        screenInventory = Game.player.Inventory.ToList();
+        screenInventory = Game.Player.Inventory.ToList();
     }
 
     /// <summary>
@@ -82,13 +82,13 @@ public class ScreenInventory : IScreen
                 Game.screen.DisplayScreen(ScreenType.Main);
                 break;
             case Command.Num1:
-                screenInventory = Game.player.Inventory.OrderBy(item => item.Name).ToList();
+                screenInventory = Game.Player.Inventory.OrderBy(item => item.Name).ToList();
                 break;
             case Command.Num2:
-                screenInventory = Game.player.Inventory.OrderByDescending(item => item.Price).ToList();
+                screenInventory = Game.Player.Inventory.OrderByDescending(item => item.Price).ToList();
                 break;
             case Command.Num3:
-                screenInventory = Game.player.Inventory.OrderBy(item => item.ItemType).ToList();
+                screenInventory = Game.Player.Inventory.OrderBy(item => item.ItemType).ToList();
                 break;
             default:
                 break;

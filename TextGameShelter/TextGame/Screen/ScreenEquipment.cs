@@ -14,7 +14,7 @@ public class ScreenEquipment : IScreen
     public ScreenEquipment()
     {
         currentItemIdx = 0;
-        equipItemList = Game.player.Inventory.Where(item => item.ItemType.TypeToString() == "장비").ToList();
+        equipItemList = Game.Player.Inventory.Where(item => item.ItemType.TypeToString() == "장비").ToList();
     }
 
     /// <summary>
@@ -30,10 +30,10 @@ public class ScreenEquipment : IScreen
             switch (equipItem.EquipType)
             {
                 case EquipType.Weapon:
-                    Game.player.Equipment.Equip(EquipSlot.Weapon, equipItem);
+                    Game.Player.Equipment.Equip(EquipSlot.Weapon, equipItem);
                     break;
                 case EquipType.Armor:
-                    Game.player.Equipment.Equip(EquipSlot.Armor, equipItem);
+                    Game.Player.Equipment.Equip(EquipSlot.Armor, equipItem);
                     break;
             }
         }

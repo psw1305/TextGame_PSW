@@ -1,15 +1,11 @@
-﻿using Shelter.Model.Stage;
+﻿using Shelter.Model;
+using Shelter.Model.Stage;
 using Shelter.Screen;
 
 namespace Shelter;
 
 public class ScreenManager
 {
-    public ScreenManager() 
-    {
-        Console.SetWindowSize(120, 30);
-    }
-
     /// <summary>
     /// 화면 타입 전시
     /// </summary>
@@ -19,7 +15,6 @@ public class ScreenManager
         IScreen screen = screenType switch
         {
             ScreenType.Main => new ScreenMain(),
-            ScreenType.MyInfo => new ScreenMyInfo(),
             ScreenType.Inventory => new ScreenInventory(),
             ScreenType.Equipment => new ScreenEquipment(),
             ScreenType.Stage => new ScreenStageStart(),
@@ -54,7 +49,6 @@ public class ScreenManager
 public enum ScreenType
 {
     Main,
-    MyInfo,
     Inventory,
     Equipment,
     Stage,

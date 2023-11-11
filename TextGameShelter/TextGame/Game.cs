@@ -1,4 +1,5 @@
-﻿using Shelter.Model;
+﻿using Shelter.Core;
+using Shelter.Model;
 using Shelter.Model.Item;
 using Shelter.Model.Stage;
 
@@ -11,7 +12,7 @@ public class Game
     // 게임 시작
     public void Start()
     {
-        Console.CursorVisible = false;
+        Renderer.Initialize();
         screen.DisplayScreen(ScreenType.Main);
     }
 
@@ -26,7 +27,15 @@ public class Game
 
     public static Equipment Equipment = new();
 
-    public static Character player = new("Bill", "퇴역 군인", 10, 5, 100, 5000, Items.ToList(), Equipment);
+    public static Character[] Characters =
+    {
+        new("빌", "퇴역 군인", 100, 10, 5, 90, 10, 6000, Equipment),
+        new("루이스", "회사원", 110, 9, 4, 95, 15, 10000, Equipment),
+        new ("조이", "학생", 80, 8, 3, 100, 20, 3000, Equipment),
+        new ("프란시스", "바이커", 120, 12, 7, 80, 0, 1000, Equipment)
+    };
+
+    public static Character Player { get; set; }
 
     #endregion
 
