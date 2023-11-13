@@ -17,7 +17,7 @@ public class Character
     public List<IItem> Inventory;
     public Equipment Equipment;
 
-    public Character(string name, string job, int hp, int atk, int def, int acc, int eva, int cash, Equipment equipment)
+    public Character(string name, string job, int hp, int atk, int def, int acc, int eva, Equipment equipment)
     {
         Name = name;
         Job = job;
@@ -26,13 +26,19 @@ public class Character
         Acc = acc;
         Eva = eva;
         Hp = hp;
-        Cash = cash;
         Equipment = equipment;
     }
 
-    public void StartItem(List<IItem> inventory)
+    public void Damaged(int damage)
     {
-        Inventory = inventory;
+        if (damage <= Def) return; 
+
+        Hp -= (damage - Def);
+
+        if (Hp <= 0)
+        {
+            Hp = 0;
+        }
     }
 
     public bool IsTrade(int price)

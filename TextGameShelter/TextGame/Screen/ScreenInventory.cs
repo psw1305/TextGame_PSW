@@ -45,7 +45,7 @@ public class ScreenInventory : IScreen
 
             WriteLine($"▷ 장 비 관 리");
             WriteLine();
-            WriteLine("[Enter: 장비관리] [Esc: 메인화면]");
+            WriteLine("[Enter: 장비 관리] [Esc: 스테이지]");
             WriteLine("[정렬 : 1. 이름  2. 가격  3. 타입]");
         }
         while (ManageInput());
@@ -79,7 +79,7 @@ public class ScreenInventory : IScreen
                 Game.screen.DisplayScreen(ScreenType.Equipment);
                 break;
             case Command.Exit:
-                Game.screen.DisplayScreen(ScreenType.Main);
+                Game.CurrentStage();
                 break;
             case Command.Num1:
                 screenInventory = Game.Player.Inventory.OrderBy(item => item.Name).ToList();

@@ -1,4 +1,5 @@
 ﻿using Shelter.Model;
+using Shelter.Model.Item;
 using System.Text;
 using static System.Console;
 
@@ -100,11 +101,11 @@ public static class Renderer
         {
             if (i == index)
             {
-                PrintMain(line + i, $"▶ {selections[i]}");
+                PrintMain(line + (i * 2), $"▶ {selections[i]}");
             }
             else
             {
-                PrintMain(line + i, $"   {selections[i]}");
+                PrintMain(line + (i * 2), $"   {selections[i]}");
             }
         }
     }
@@ -116,7 +117,6 @@ public static class Renderer
     /// <summary>
     /// 게임 화면 글자 출력 (왼쪽)
     /// </summary>
-    /// <param name="content"></param>
     public static void Print(int line, string content)
     {
         int correctLength = GetPrintingLength(content);
@@ -127,7 +127,6 @@ public static class Renderer
     /// <summary>
     /// 게임 화면 선택지 출력
     /// </summary>
-    /// <param name="content"></param>
     public static void PrintSelections(int line, int index, string[] selections)
     {
         for (int i = 0; i < selections.Length; i++)
@@ -136,13 +135,13 @@ public static class Renderer
             {
                 ForegroundColor = ConsoleColor.Black;
                 BackgroundColor = ConsoleColor.White;
-                Print(line + i, $"{selections[i]}");
+                Print(line + (i * 2), $"{selections[i]}");
                 ForegroundColor = ConsoleColor.White;
                 BackgroundColor = ConsoleColor.Black;
             }
             else
             {
-                Print(line + i, $"{selections[i]}");
+                Print(line + (i * 2), $"{selections[i]}");
             }
         }
     }
@@ -152,7 +151,7 @@ public static class Renderer
     /// </summary>
     public static void PrintKeyGuide(string content)
     {
-        int line = height - 5;
+        int line = height - 3;
         Print(line, content);
     }
 
@@ -161,12 +160,11 @@ public static class Renderer
     #region Side Print
 
     /// <summary>
-    /// 게임 화면 글자 출력 (왼쪽)
+    /// 게임 화면 글자 출력
     /// </summary>
     /// <param name="content"></param>
     public static void PrintSide(int line, string content)
     {
-        int correctLength = GetPrintingLength(content);
         SetCursorPosition(width + 2, line);
         WriteLine(content);
     }
@@ -195,23 +193,72 @@ public static class Renderer
         Character player = Game.Player;
 
         PrintSide(1, $"[ 플 레 이 어 ]");
-        PrintSide(3, $"Name: {player.Name}");
-        PrintSide(4, $"Job: {player.Job}");
-        PrintSide(5, $"HP: {player.Hp}");
-        PrintSide(6, $"ATK: {player.Atk}");
-        PrintSide(7, $"DEF: {player.Def}");
-        PrintSide(8, $"ACC: {player.Acc}");
-        PrintSide(9, $"EVA: {player.Eva}");
+        PrintSide(3, $" 이 름 : {player.Name}");
+        PrintSide(4, $" 직 업 : {player.Job}");
+        PrintSide(5, $" 체 력 : {player.Hp}");
+        PrintSide(6, $" 공 격 : {player.Atk}");
+        PrintSide(7, $" 방 어 : {player.Def}");
+        PrintSide(8, $" 명 중 : {player.Acc}");
+        PrintSide(9, $" 회 피 : {player.Eva}");
     }
 
     public static void PrintSideInventory()
     {
         Character player = Game.Player;
 
-        PrintSide(11, $"[ 인 벤 토 리 ]");    
+        PrintSide(11, $"[ 인 벤 토 리 ] - {player.Cash}$");    
         for (int i = 0; i < player.Inventory.Count; i++)
         {
-            PrintSide(13 + i, $"{player.Inventory[i].Name}");
+            if (player.Inventory[i].ItemType == ItemType.Equipment)
+            {
+                var equipItem = player.Inventory[i] as ItemEquip;
+
+                if (equipItem.IsEquipped)
+                {
+                    PrintSide(13 + i, $"[장착] {equipItem.Name}");
+                }
+                else
+                {
+                    PrintSide(13 + i, $"{player.Inventory[i].Name}");
+                }
+            }
+            else
+            {
+                PrintSide(13 + i, $"{player.Inventory[i].Name}");
+            }
+        }
+    }
+
+    public static void PrintSideAll()
+    {
+        PrintSideCharacterInfo();
+        PrintSideInventory();
+        PrintSide(height - 3, "[I] 인벤토리 확인");
+    }
+
+    #endregion
+
+    #region Draw Battle
+
+    /// <summary>
+    /// 전투 중인 적 출력
+    /// </summary>
+    public static void DrawEnemies(int line, int index, List<Enemy> enemies)
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (i == index)
+            {
+                ForegroundColor = ConsoleColor.Black;
+                BackgroundColor = ConsoleColor.White;
+                Print(line + (i * 2), $"{enemies[i].Name} [HP: {enemies[i].Hp}]");
+                ForegroundColor = ConsoleColor.White;
+                BackgroundColor = ConsoleColor.Black;
+            }
+            else
+            {
+                Print(line + (i * 2), $"{enemies[i].Name} [HP: {enemies[i].Hp}]");
+            }
         }
     }
 

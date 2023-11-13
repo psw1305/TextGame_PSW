@@ -1,8 +1,10 @@
-﻿namespace Shelter.Screen;
+﻿using Shelter.Core;
+
+namespace Shelter.Screen;
 
 public class ScreenEnd : IScreen
 {
-    public static int currentIdx = 0;
+    public static int selectionIdx = 0;
     public static string[] selections =
     {
         "메 인 화 면",
@@ -13,23 +15,11 @@ public class ScreenEnd : IScreen
         do
         {
             Console.Clear();
-            Console.WriteLine("게임 끝");
-            Console.WriteLine();
-
-            for (int i = 0; i < selections.Length; i++)
-            {
-                if (i == currentIdx)
-                {
-                    Console.WriteLine($"▷ {selections[i]}");
-                }
-                else
-                {
-                    Console.WriteLine($"   {selections[i]}");
-                }
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("[Enter: 선택]");
+            Renderer.DrawBorder();
+            Renderer.DrawSideBorder();
+            Renderer.Print(4, "[ 엔 딩 ]");
+            Renderer.PrintSelections(8, selectionIdx, selections);
+            Renderer.PrintSideAll();
         }
         while (ManageInput());
     }
@@ -55,13 +45,13 @@ public class ScreenEnd : IScreen
         switch (cmd)
         {
             case Command.MoveTop:
-                if (currentIdx > 0)
-                    currentIdx--;
+                if (selectionIdx > 0)
+                    selectionIdx--;
                 break;
 
             case Command.MoveBottom:
-                if (currentIdx < selections.Length - 1)
-                    currentIdx++;
+                if (selectionIdx < selections.Length - 1)
+                    selectionIdx++;
                 break;
 
             case Command.Interact:

@@ -5,13 +5,17 @@ namespace Shelter.Screen;
 
 public class ScreenStageBattle : IScreen
 {
-    static int selectedEnemyIdx;
-    public static Enemy[] Enemies;
+    static int selectionIdx = 0;
+    static List<Enemy> enemies = Game.GetEnemies().ToList();
 
-    public ScreenStageBattle() 
+    static void Attack()
     {
-        selectedEnemyIdx = 0;
-        Enemies = Game.CurrentBattle().Enemies;
+        enemies[selectionIdx].Damaged(Game.Player.Atk);
+        
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            Game.Player.Damaged(enemies[i].Atk);
+        }
     }
 
     public void DrawScreen()
@@ -21,8 +25,10 @@ public class ScreenStageBattle : IScreen
             Console.Clear();
             Renderer.DrawBorder();
             Renderer.DrawSideBorder();
-            Renderer.PrintSideCharacterInfo();
-            Renderer.PrintSideInventory();
+            Renderer.Print(4, "[ 전 투 ]");
+            Renderer.DrawEnemies(8, selectionIdx, enemies);
+            Renderer.PrintKeyGuide("[A] 공격  [E] 아이템 사용");
+            Renderer.PrintSideAll();
         }
         while (ManageInput());
     }
@@ -33,39 +39,38 @@ public class ScreenStageBattle : IScreen
 
         var commands = key.Key switch
         {
-            ConsoleKey.LeftArrow => Command.MoveLeft,
-            ConsoleKey.RightArrow => Command.MoveRight,
+            ConsoleKey.UpArrow => Command.MoveTop,
+            ConsoleKey.DownArrow => Command.MoveBottom,
             ConsoleKey.A => Command.Attack,
             ConsoleKey.E => Command.Use,
+            ConsoleKey.I => Command.Inventory,
             ConsoleKey.Enter => Command.Interact,
             _ => Command.Nothing
         };
 
         OnCommand(commands);
-        return commands != Command.Interact;
+        return commands != Command.Use;
     }
 
     static void OnCommand(Command cmd)
     {
         switch (cmd)
         {
-            case Command.MoveLeft:
-                if (selectedEnemyIdx> 0)
-                {
-                    selectedEnemyIdx--;
-                }
+            case Command.MoveTop:
+                if (selectionIdx > 0)
+                    selectionIdx--;
                 break;
-            case Command.MoveRight:
-                if (selectedEnemyIdx < 2)
-                {
-                    selectedEnemyIdx++;
-                }
+            case Command.MoveBottom:
+                if (selectionIdx < 2)
+                    selectionIdx++;
                 break;
             case Command.Attack:
-                
+                Attack();
                 break;
             case Command.Use:
-                
+                break;
+            case Command.Inventory:
+                Game.screen.DisplayScreen(ScreenType.Inventory);
                 break;
             case Command.Interact:
                 Game.NextStage();

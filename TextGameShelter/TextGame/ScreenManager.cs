@@ -1,5 +1,4 @@
-﻿using Shelter.Model;
-using Shelter.Model.Stage;
+﻿using Shelter.Model.Stage;
 using Shelter.Screen;
 
 namespace Shelter;
@@ -65,12 +64,11 @@ public enum Command
     Nothing,
     MoveTop,
     MoveBottom,
-    MoveLeft,
-    MoveRight,
+    Attack,
+    Use,
+    Inventory,
     Num1,
     Num2,
     Num3,
-    Attack,
-    Use,
 }
 

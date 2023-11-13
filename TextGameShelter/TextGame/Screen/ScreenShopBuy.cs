@@ -1,18 +1,17 @@
 ﻿using ConsoleTables;
 using Shelter.Core;
 using Shelter.Model.Item;
-using static System.Console;
 
 namespace Shelter.Screen;
 
 public class ScreenShopBuy : IScreen
 {
-    public static int currentItemIdx = 0;
+    public static int selectionIdx = 0;
     public static List<IItem> productLists = Game.ShopProducts.ToList();
 
     static void Buy()
     {
-        var item = productLists[currentItemIdx];
+        var item = productLists[selectionIdx];
         if (item == null || item.IsEmptyItem()) return;
 
         if (Game.Player.IsTrade(item.Price))
@@ -33,42 +32,32 @@ public class ScreenShopBuy : IScreen
         {
             var selectArrow = string.Empty;
 
-            if (i == currentItemIdx) selectArrow = "▷";
+            if (i == selectionIdx) selectArrow = "▷";
 
             table.AddRow(selectArrow, productLists[i].Name, productLists[i].ItemType.TypeToString(), productLists[i].Desc, productLists[i].Price);
         }
 
         table.Write();
-        WriteLine();
+        Console.WriteLine();
     }
 
     public void DrawScreen()
     {
         do
         {
-            Clear();
-            Write("[ 상 점 ] - ");
-            ForegroundColor = ConsoleColor.Green;
-            WriteLine("구 매");
-            WriteLine();
-            ResetColor();
-
-            WriteLine();
-            Write($"[ 보 유 현 금 : {Game.Player.Cash}]");
-            WriteLine();
-
+            Console.Clear();
             DrawProductList();
-
-            WriteLine();
-            WriteLine("[방향키 ↑ ↓: 위 아래로 이동] [Enter: 상품 구매] [Esc: 상점]");
-            WriteLine($"{Game.Player.Inventory.Count}");
+            //Renderer.DrawBorder();
+            //Renderer.DrawSideBorder();
+            //Renderer.Print(4, "[ 상 점 ] - 구 매");
+            //Renderer.PrintSideAll();
         }
         while (ManageInput());
     }
 
     public bool ManageInput()
     {
-        var key = ReadKey(true);
+        var key = Console.ReadKey(true);
 
         var commands = key.Key switch
         {
@@ -88,12 +77,12 @@ public class ScreenShopBuy : IScreen
         switch (cmd)
         {
             case Command.MoveTop:
-                if (currentItemIdx > 0)
-                    currentItemIdx--;
+                if (selectionIdx > 0)
+                    selectionIdx--;
                 break;
             case Command.MoveBottom:
-                if (currentItemIdx < productLists.Count - 1)
-                    currentItemIdx++;
+                if (selectionIdx < productLists.Count - 1)
+                    selectionIdx++;
                 break;
             case Command.Interact:
                 Buy();

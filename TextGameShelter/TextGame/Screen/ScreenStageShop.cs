@@ -1,12 +1,14 @@
-﻿namespace Shelter.Screen;
+﻿using Shelter.Core;
+
+namespace Shelter.Screen;
 
 public class ScreenStageShop : IScreen
 {
-    public static ScreenShopBuy ShopScreen = new();
+    public static ScreenShopBuy ShopBuyScreen = new();
     public static ScreenShopSell ShopSellScreen = new();
 
-    public static int currentIdx = 0;
-    public static string[] selections =
+    private static int selectionIdx = 0;
+    private static string[] selections =
     {
         "구 매",
         "판 매",
@@ -15,15 +17,15 @@ public class ScreenStageShop : IScreen
 
     static void Selection()
     {
-        if (currentIdx == 0) 
+        if (selectionIdx == 0) 
         {
-            ShopScreen.DrawScreen();
+            ShopBuyScreen.DrawScreen();
         }
-        else if (currentIdx == 1)
+        else if (selectionIdx == 1)
         {
             ShopSellScreen.DrawScreen();
         }
-        else if(currentIdx == 2) 
+        else if(selectionIdx == 2) 
         {
             Game.NextStage();
         }
@@ -34,23 +36,11 @@ public class ScreenStageShop : IScreen
         do
         {
             Console.Clear();
-            Console.WriteLine("상 점 스 테 이 지");
-            Console.WriteLine();
-
-            for (int i = 0; i < selections.Length; i++)
-            {
-                if (i == currentIdx)
-                {
-                    Console.WriteLine($"▷ {selections[i]}");
-                }
-                else
-                {
-                    Console.WriteLine($"   {selections[i]}");
-                }
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("[방향키 ↑ ↓: 위 아래로 이동] [Enter: 선택]");
+            Renderer.DrawBorder();
+            Renderer.DrawSideBorder();
+            Renderer.Print(4, "[ 상 점 ]");
+            Renderer.PrintSelections(8, selectionIdx, selections);
+            Renderer.PrintSideAll();
         }
         while (ManageInput());
     }
@@ -63,6 +53,7 @@ public class ScreenStageShop : IScreen
         {
             ConsoleKey.UpArrow => Command.MoveTop,
             ConsoleKey.DownArrow => Command.MoveBottom,
+            ConsoleKey.I => Command.Inventory,
             ConsoleKey.Enter => Command.Interact,
             _ => Command.Nothing
         };
@@ -76,15 +67,19 @@ public class ScreenStageShop : IScreen
         switch (cmd)
         {
             case Command.MoveTop:
-                if (currentIdx > 0)
-                    currentIdx--;
+                if (selectionIdx > 0)
+                    selectionIdx--;
                 break;
             case Command.MoveBottom:
-                if (currentIdx < selections.Length - 1)
-                    currentIdx++;
+                if (selectionIdx < selections.Length - 1)
+                    selectionIdx++;
+                break;
+            case Command.Inventory:
+                Game.screen.DisplayScreen(ScreenType.Inventory);
                 break;
             case Command.Interact:
                 Selection();
+                selectionIdx = 0;
                 break;
             default:
                 break;

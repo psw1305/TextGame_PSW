@@ -1,4 +1,6 @@
-﻿namespace Shelter.Screen;
+﻿using Shelter.Core;
+
+namespace Shelter.Screen;
 
 public class ScreenStageEvent : IScreen
 {
@@ -13,23 +15,10 @@ public class ScreenStageEvent : IScreen
         do
         {
             Console.Clear();
-            Console.WriteLine("이 벤 트 스 테 이 지");
-            Console.WriteLine();
-
-            for (int i = 0; i < selectNames.Length; i++)
-            {
-                if (i == currentIdx)
-                {
-                    Console.WriteLine($"▷ {selectNames[i]}");
-                }
-                else
-                {
-                    Console.WriteLine($"   {selectNames[i]}");
-                }
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("[방향키 ↑ ↓: 위 아래로 이동] [Enter: 선택]");
+            Renderer.DrawBorder();
+            Renderer.DrawSideBorder();
+            Renderer.Print(4, "[ 이 벤 트 ]");
+            Renderer.PrintSideAll();
         }
         while (ManageInput());
     }
@@ -42,6 +31,7 @@ public class ScreenStageEvent : IScreen
         {
             ConsoleKey.UpArrow => Command.MoveTop,
             ConsoleKey.DownArrow => Command.MoveBottom,
+            ConsoleKey.I => Command.Inventory,
             ConsoleKey.Enter => Command.Interact,
             _ => Command.Nothing
         };
@@ -61,6 +51,9 @@ public class ScreenStageEvent : IScreen
             case Command.MoveBottom:
                 if (currentIdx < selectNames.Length - 1)
                     currentIdx++;
+                break;
+            case Command.Inventory:
+                Game.screen.DisplayScreen(ScreenType.Inventory);
                 break;
             case Command.Interact:
                 Game.NextStage();

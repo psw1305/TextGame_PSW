@@ -76,7 +76,7 @@ public class ScreenEquipment : IScreen
             DrawEquipmentList();
 
             WriteLine();
-            WriteLine("[방향키 ↑ ↓: 위 아래로 이동] [Enter: 아이템 장착] [Esc: 인벤토리로 돌아가기]");
+            WriteLine("[방향키 ↑ ↓: 위 아래로 이동] [Enter: 아이템 장착] [Esc: 인벤토리]");
         }
         while (ManageInput());
     }

@@ -58,7 +58,25 @@ public class ScreenStageStart : IScreen
         }
         else if (progress == 2)
         {
-            Game.Player.StartItem(Game.Items.ToList());
+            switch (selectionIdx) 
+            {
+                case 0:
+                    Game.Player.Cash = 10000;
+                    Game.Player.Inventory = Game.Items_1.ToList();
+                    break;
+                case 1:
+                    Game.Player.Cash = 3000;
+                    Game.Player.Inventory = Game.Items_2.ToList();
+                    break;
+                case 2:
+                    Game.Player.Cash = 5000;
+                    Game.Player.Inventory = Game.Items_3.ToList();
+                    break;
+                case 3:
+                    Game.Player.Cash = 0;
+                    Game.Player.Inventory = new();
+                    break;
+            }
         }
 
         selectionIdx = 0;

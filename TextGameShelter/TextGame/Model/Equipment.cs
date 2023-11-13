@@ -9,6 +9,7 @@ public enum EquipSlot
     Armor,
 }
 
+
 public class Equipment
 {
     private Dictionary<EquipSlot, ItemEquip> equipped = new();
@@ -47,6 +48,7 @@ public class Equipment
         }
 
         equipped[slot] = itemEquip;
+        AddStat(equipped[slot].StatType, equipped[slot].Stat);
         equipped[slot].IsEquipped = true;
     }
 
@@ -56,7 +58,46 @@ public class Equipment
     /// <param name="slot"></param>
     public void Unequip(EquipSlot slot)
     {
+        MinusStat(equipped[slot].StatType, equipped[slot].Stat);
         equipped[slot].IsEquipped = false;
         equipped[slot] = ItemEquip.Empty;
+    }
+
+    private void AddStat(StatType statType, int stat)
+    {
+        switch (statType)
+        {
+            case StatType.ATK:
+                Game.Player.Atk += stat;
+                break;
+            case StatType.DEF:
+                Game.Player.Def += stat;
+                break;
+            case StatType.ACC:
+                Game.Player.Acc += stat;
+                break;
+            case StatType.EVA:
+                Game.Player.Eva += stat;
+                break;
+        }
+    }
+
+    private void MinusStat(StatType statType, int stat)
+    {
+        switch (statType)
+        {
+            case StatType.ATK:
+                Game.Player.Atk -= stat;
+                break;
+            case StatType.DEF:
+                Game.Player.Def -= stat;
+                break;
+            case StatType.ACC:
+                Game.Player.Acc -= stat;
+                break;
+            case StatType.EVA:
+                Game.Player.Eva -= stat;
+                break;
+        }
     }
 }

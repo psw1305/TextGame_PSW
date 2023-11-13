@@ -32,10 +32,12 @@ public static class Extensions
     // 아이템 능력치 => 문자열 변환
     public static string StatToString(this ItemEquip item)
     {
-        return item.EquipType switch
+        return item.StatType switch
         {
-            EquipType.Weapon => "공격력 +" + item.Stat,
-            EquipType.Armor => "방어력 +" + item.Stat,
+            StatType.ATK => "공격 +" + item.Stat,
+            StatType.DEF => "방어 +" + item.Stat,
+            StatType.ACC => "명중 +" + item.Stat,
+            StatType.EVA => "회피 +" + item.Stat,
             _ => string.Empty
         };
     }
