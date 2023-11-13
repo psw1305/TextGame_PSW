@@ -39,6 +39,7 @@ public class ScreenStageShop : IScreen
             Renderer.DrawBorder();
             Renderer.DrawSideBorder();
             Renderer.Print(4, "[ 상 점 ]");
+            Renderer.PrintKeyGuide("[Enter] 선택");
             Renderer.PrintSelections(8, selectionIdx, selections);
             Renderer.PrintSideAll();
         }

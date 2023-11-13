@@ -18,6 +18,7 @@ public class ScreenStageEvent : IScreen
             Renderer.DrawBorder();
             Renderer.DrawSideBorder();
             Renderer.Print(4, "[ 이 벤 트 ]");
+            Renderer.PrintKeyGuide("[Enter] 스테이지 넘기기");
             Renderer.PrintSideAll();
         }
         while (ManageInput());

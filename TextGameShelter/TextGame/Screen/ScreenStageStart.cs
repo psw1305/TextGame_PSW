@@ -38,7 +38,7 @@ public class ScreenStageStart : IScreen
         else if (progress == 2)
         {
             Renderer.Print(4, "[쉘터 찾기...]");
-            Renderer.Print(8, "[Enter를 눌러서 게임 스타트]");
+            Renderer.Print(8, "[Enter를 눌러서 게임 시작]");
             Renderer.PrintSideCharacterInfo();
             Renderer.PrintSideInventory();
         }

@@ -5,8 +5,13 @@ namespace Shelter.Screen;
 
 public class ScreenStageBattle : IScreen
 {
-    static int selectionIdx = 0;
+    static int selectionIdx;
     static List<Enemy> enemies = Game.GetEnemies().ToList();
+
+    public ScreenStageBattle() 
+    {
+        enemies = Game.GetEnemies().ToList();
+    }
 
     static void Attack()
     {
@@ -27,7 +32,7 @@ public class ScreenStageBattle : IScreen
             Renderer.DrawSideBorder();
             Renderer.Print(4, "[ 전 투 ]");
             Renderer.DrawEnemies(8, selectionIdx, enemies);
-            Renderer.PrintKeyGuide("[A] 공격  [E] 아이템 사용");
+            Renderer.PrintKeyGuide("[A] 공격  [Enter] 스테이지 넘기기");
             Renderer.PrintSideAll();
         }
         while (ManageInput());
@@ -73,6 +78,7 @@ public class ScreenStageBattle : IScreen
                 Game.screen.DisplayScreen(ScreenType.Inventory);
                 break;
             case Command.Interact:
+                selectionIdx = 0;
                 Game.NextStage();
                 break;
             default:

@@ -46,6 +46,11 @@ public class ScreenShopBuy : IScreen
         do
         {
             Console.Clear();
+
+            Console.WriteLine();
+            Console.Write($"[ 보 유 현 금 : {Game.Player.Cash}]");
+            Console.WriteLine();
+
             DrawProductList();
             //Renderer.DrawBorder();
             //Renderer.DrawSideBorder();
